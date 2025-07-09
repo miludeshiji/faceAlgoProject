@@ -1,0 +1,4 @@
+/.git
+/.venv
+core/feature/weight/
+frontend/node_modules/

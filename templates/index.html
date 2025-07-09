@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>人脸识别系统演示</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>人脸识别功能演示</h1>
+            <p>上传图片以体验不同的人脸识别功能</p>
+        </header>
+
+        <main>
+            <!-- 人脸检测 -->
+            <section class="card">
+                <h2>1. 人脸检测 (Face Detection)</h2>
+                <p>在图像中检测出所有人脸的位置，并标记出关键点。</p>
+                <form id="detect-form" class="api-form">
+                    <div class="form-group">
+                        <label for="detect-file">选择图片:</label>
+                        <input type="file" id="detect-file" name="file" accept="image/*" required>
+                    </div>
+                    <button type="submit">开始检测</button>
+                </form>
+                <div id="detect-result" class="result-box"></div>
+            </section>
+
+            <!-- 人脸对齐 -->
+            <section class="card">
+                <h2>2. 人脸对齐 (Face Alignment)</h2>
+                <p>将检测到的人脸进行旋转、缩放，对齐为标准尺寸的正面照。</p>
+                <form id="align-form" class="api-form">
+                    <div class="form-group">
+                        <label for="align-file">选择图片:</label>
+                        <input type="file" id="align-file" name="file" accept="image/*" required>
+                    </div>
+                    <button type="submit">开始对齐</button>
+                </form>
+                <div id="align-result" class="result-box"></div>
+            </section>
+
+            <!-- 人脸注册 -->
+            <section class="card">
+                <h2>3. 人脸注册 (Face Registration)</h2>
+                <p>将人脸特征录入数据库，用于后续的比对和搜索。</p>
+                <form id="register-form" class="api-form">
+                    <div class="form-group">
+                        <label for="register-name">姓名:</label>
+                        <input type="text" id="register-name" name="person_name" placeholder="请输入姓名(如: 张三)" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="register-file">选择图片:</label>
+                        <input type="file" id="register-file" name="file" accept="image/*" required>
+                    </div>
+                    <button type="submit">注册人脸</button>
+                </form>
+                <div id="register-result" class="result-box"></div>
+            </section>
+
+            <!-- 1:1 人脸比对 -->
+            <section class="card">
+                <h2>4. 人脸比对 (1:1 Face Comparison)</h2>
+                <p>比较两张图片中的人脸，判断是否为同一个人。</p>
+                <form id="compare-form" class="api-form">
+                    <div class="form-group">
+                        <label for="compare-file1">图片 1:</label>
+                        <input type="file" id="compare-file1" name="file1" accept="image/*" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="compare-file2">图片 2:</label>
+                        <input type="file" id="compare-file2" name="file2" accept="image/*" required>
+                    </div>
+                    <button type="submit">开始比对</button>
+                </form>
+                <div id="compare-result" class="result-box"></div>
+            </section>
+
+            <!-- 1:N 人脸搜索 -->
+            <section class="card">
+                <h2>5. 人脸搜索 (1:N Face Search)</h2>
+                <p>在已注册的人脸数据库中，搜索图片中的人脸并识别出身份。</p>
+                <form id="search-form" class="api-form">
+                    <div class="form-group">
+                        <label for="search-file">选择图片:</label>
+                        <input type="file" id="search-file" name="file" accept="image/*" required>
+                    </div>
+                    <button type="submit">开始搜索</button>
+                </form>
+                <div id="search-result" class="result-box"></div>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // 通用表单处理函数
+            const handleFormSubmit = async (formId, url, resultId) => {
+                const form = document.getElementById(formId);
+                const resultBox = document.getElementById(resultId);
+
+                form.addEventListener('submit', async (e) => {
+                    e.preventDefault();
+                    resultBox.innerHTML = '<div class="loader"></div><p>处理中，请稍候...</p>';
+                    
+                    const formData = new FormData(form);
+                    
+                    try {
+                        const response = await fetch(url, {
+                            method: 'POST',
+                            body: formData
+                        });
+
+                        const data = await response.json();
+
+                        if (!response.ok) {
+                            throw new Error(data.error || '服务器发生未知错误');
+                        }
+                        
+                        // 根据不同的API渲染结果
+                        renderResult(resultId, data);
+
+                    } catch (error) {
+                        console.error('Error:', error);
+                        resultBox.innerHTML = `<p class="error">发生错误: ${error.message}</p>`;
+                    }
+                });
+            };
+
+            // 结果渲染函数
+            const renderResult = (resultId, data) => {
+                const resultBox = document.getElementById(resultId);
+                let html = '';
+
+                switch (resultId) {
+                    case 'detect-result':
+                        html = `
+                            <h4>检测结果</h4>
+                            <p>检测到 ${data.detections} 张人脸。</p>
+                            <div class="image-container">
+                                <div>
+                                    <p>原始图片</p>
+                                    <img src="${data.original_image}" alt="Original Image">
+                                </div>
+                                <div>
+                                    <p>处理后图片</p>
+                                    <img src="${data.processed_image}" alt="Processed Image">
+                                </div>
+                            </div>
+                        `;
+                        break;
+                    case 'align-result':
+                         html = `
+                            <h4>对齐结果</h4>
+                            <div class="image-container">
+                                <div>
+                                    <p>原始图片</p>
+                                    <img src="${data.original_image}" alt="Original Image">
+                                </div>
+                                <div>
+                                    <p>对齐后的人脸</p>
+                                    <img src="${data.processed_image}" alt="Processed Image">
+                                </div>
+                            </div>
+                        `;
+                        break;
+                    case 'register-result':
+                        html = `<p class="success">${data.message}</p>`;
+                        break;
+                    case 'compare-result':
+                         html = `
+                            <h4>比对结果</h4>
+                            <p>相似度: <strong>${data.similarity}</strong></p>
+                            <p class="${data.is_same ? 'success' : 'error'}">判断结果: <strong>${data.result_text}</strong></p>
+                            <div class="image-container">
+                                <div>
+                                    <p>图片 1</p>
+                                    <img src="${data.image1}" alt="Image 1">
+                                </div>
+                                <div>
+                                    <p>图片 2</p>
+                                    <img src="${data.image2}" alt="Image 2">
+                                </div>
+                            </div>
+                        `;
+                        break;
+                    case 'search-result':
+                        let resultList = data.results.map(r => `<li>ID: ${r.id}, 分数: ${r.score}</li>`).join('');
+                        html = `
+                            <h4>搜索结果</h4>
+                            ${data.results.length > 0 ? `<ul>${resultList}</ul>` : '<p>未在数据库中找到匹配的人脸。</p>'}
+                            <div class="image-container">
+                                <div>
+                                    <p>原始图片</p>
+                                    <img src="${data.original_image}" alt="Original Image">
+                                </div>
+                                <div>
+                                    <p>识别结果图</p>
+                                    <img src="${data.processed_image}" alt="Processed Image">
+                                </div>
+                            </div>
+                        `;
+                        break;
+                }
+                resultBox.innerHTML = html;
+            };
+
+            // 为每个表单绑定事件
+            handleFormSubmit('detect-form', '/api/detect', 'detect-result');
+            handleFormSubmit('align-form', '/api/align', 'align-result');
+            handleFormSubmit('register-form', '/api/register', 'register-result');
+            handleFormSubmit('compare-form', '/api/compare', 'compare-result');
+            handleFormSubmit('search-form', '/api/search', 'search-result');
+        });
+    </script>
+</body>
+</html>

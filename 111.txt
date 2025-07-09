@@ -1,0 +1,489 @@
+æÌ ±‡≥Ã µƒŒƒº˛º– PATH ¡–±Ì
+æÌ–Ú¡–∫≈Œ™ 4A70-BDF4
+F:.
+
+©¶  .gitignore
+©¶  111.txt
+©¶  222.txt
+©¶  app.py
+©¶  face_compare.py
+©¶  face_compare.sh
+©¶  face_search.py
+©¶  face_search.sh
+©¶  README.md
+©¶  register.py
+©¶  requirements.txt
+©¶  simhei.ttf
+©¶                              
+©¿©§configs
+©¶  ©¶  configs.py
+©¶  ©¶  
+©¶  ©∏©§__pycache__
+©¶          configs.cpython-36.pyc
+©¶          configs.cpython-38.pyc
+©¶          
+©¿©§core
+©¶  ©¶  face_detector.py
+©¶  ©¶  face_feature.py
+©¶  ©¶  face_matcher.py
+©¶  ©¶  face_recognizer.py
+©¶  ©¶  face_register.py
+©¶  ©¶  __init__.py
+©¶  ©¶  
+©¶  ©¿©§alignment
+©¶  ©¶  ©¶  face_alignment.py
+©¶  ©¶  ©¶  face_alignment_111.py
+©¶  ©¶  ©¶  test.jpg
+©¶  ©¶  ©¶  __init__.py
+©¶  ©¶  ©¶  
+©¶  ©¶  ©¿©§alignment
+©¶  ©¶  ©¶  ©¶  align_trans.py
+©¶  ©¶  ©¶  ©¶  cv_face_alignment.py
+©¶  ©¶  ©¶  ©¶  matlab_cp2tform.py
+©¶  ©¶  ©¶  ©¶  __init__.py
+©¶  ©¶  ©¶  ©¶  
+©¶  ©¶  ©¶  ©∏©§__pycache__
+©¶  ©¶  ©¶          cv_face_alignment.cpython-36.pyc
+©¶  ©¶  ©¶          cv_face_alignment.cpython-37.pyc
+©¶  ©¶  ©¶          cv_face_alignment.cpython-38.pyc
+©¶  ©¶  ©¶          __init__.cpython-36.pyc
+©¶  ©¶  ©¶          __init__.cpython-37.pyc
+©¶  ©¶  ©¶          __init__.cpython-38.pyc
+©¶  ©¶  ©¶          
+©¶  ©¶  ©∏©§__pycache__
+©¶  ©¶          face_alignment.cpython-36.pyc
+©¶  ©¶          face_alignment.cpython-37.pyc
+©¶  ©¶          face_alignment.cpython-38.pyc
+©¶  ©¶          face_alignment_111.cpython-37.pyc
+©¶  ©¶          __init__.cpython-36.pyc
+©¶  ©¶          __init__.cpython-37.pyc
+©¶  ©¶          __init__.cpython-38.pyc
+©¶  ©¶          
+©¶  ©¿©§detection
+©¶  ©¶  ©¶  detector.py
+©¶  ©¶  ©¶  __init__.py
+©¶  ©¶  ©¶  
+©¶  ©¶  ©¿©§light_detector
+©¶  ©¶  ©¶  ©¶  light_detector.py
+©¶  ©¶  ©¶  ©¶  requirements.txt
+©¶  ©¶  ©¶  ©¶  __init__.py
+©¶  ©¶  ©¶  ©¶  
+©¶  ©¶  ©¶  ©¿©§models
+©¶  ©¶  ©¶  ©¶  ©¶  __init__.py
+©¶  ©¶  ©¶  ©¶  ©¶  
+©¶  ©¶  ©¶  ©¶  ©¿©§config
+©¶  ©¶  ©¶  ©¶  ©¶  ©¶  config.py
+©¶  ©¶  ©¶  ©¶  ©¶  ©¶  __init__.py
+©¶  ©¶  ©¶  ©¶  ©¶  ©¶  
+©¶  ©¶  ©¶  ©¶  ©¶  ©∏©§__pycache__
+©¶  ©¶  ©¶  ©¶  ©¶          config.cpython-36.pyc
+©¶  ©¶  ©¶  ©¶  ©¶          config.cpython-37.pyc
+©¶  ©¶  ©¶  ©¶  ©¶          config.cpython-38.pyc
+©¶  ©¶  ©¶  ©¶  ©¶          __init__.cpython-36.pyc
+©¶  ©¶  ©¶  ©¶  ©¶          __init__.cpython-37.pyc
+©¶  ©¶  ©¶  ©¶  ©¶          __init__.cpython-38.pyc
+©¶  ©¶  ©¶  ©¶  ©¶          
+©¶  ©¶  ©¶  ©¶  ©¿©§layers
+©¶  ©¶  ©¶  ©¶  ©¶  ©¶  box_utils.py
+©¶  ©¶  ©¶  ©¶  ©¶  ©¶  __init__.py
+©¶  ©¶  ©¶  ©¶  ©¶  ©¶  
+©¶  ©¶  ©¶  ©¶  ©¶  ©¿©§functions
+©¶  ©¶  ©¶  ©¶  ©¶  ©¶  ©¶  prior_box.py
+©¶  ©¶  ©¶  ©¶  ©¶  ©¶  ©¶  __init__.py
+©¶  ©¶  ©¶  ©¶  ©¶  ©¶  ©¶  
+©¶  ©¶  ©¶  ©¶  ©¶  ©¶  ©∏©§__pycache__
+©¶  ©¶  ©¶  ©¶  ©¶  ©¶          prior_box.cpython-36.pyc
+©¶  ©¶  ©¶  ©¶  ©¶  ©¶          prior_box.cpython-37.pyc
+©¶  ©¶  ©¶  ©¶  ©¶  ©¶          prior_box.cpython-38.pyc
+©¶  ©¶  ©¶  ©¶  ©¶  ©¶          __init__.cpython-36.pyc
+©¶  ©¶  ©¶  ©¶  ©¶  ©¶          __init__.cpython-37.pyc
+©¶  ©¶  ©¶  ©¶  ©¶  ©¶          __init__.cpython-38.pyc
+©¶  ©¶  ©¶  ©¶  ©¶  ©¶          
+©¶  ©¶  ©¶  ©¶  ©¶  ©¿©§modules
+©¶  ©¶  ©¶  ©¶  ©¶  ©¶  ©¶  multibox_loss.py
+©¶  ©¶  ©¶  ©¶  ©¶  ©¶  ©¶  __init__.py
+©¶  ©¶  ©¶  ©¶  ©¶  ©¶  ©¶  
+©¶  ©¶  ©¶  ©¶  ©¶  ©¶  ©∏©§__pycache__
+©¶  ©¶  ©¶  ©¶  ©¶  ©¶          multibox_loss.cpython-36.pyc
+©¶  ©¶  ©¶  ©¶  ©¶  ©¶          multibox_loss.cpython-37.pyc
+©¶  ©¶  ©¶  ©¶  ©¶  ©¶          multibox_loss.cpython-38.pyc
+©¶  ©¶  ©¶  ©¶  ©¶  ©¶          __init__.cpython-36.pyc
+©¶  ©¶  ©¶  ©¶  ©¶  ©¶          __init__.cpython-37.pyc
+©¶  ©¶  ©¶  ©¶  ©¶  ©¶          __init__.cpython-38.pyc
+©¶  ©¶  ©¶  ©¶  ©¶  ©¶          
+©¶  ©¶  ©¶  ©¶  ©¶  ©∏©§__pycache__
+©¶  ©¶  ©¶  ©¶  ©¶          box_utils.cpython-36.pyc
+©¶  ©¶  ©¶  ©¶  ©¶          box_utils.cpython-37.pyc
+©¶  ©¶  ©¶  ©¶  ©¶          box_utils.cpython-38.pyc
+©¶  ©¶  ©¶  ©¶  ©¶          __init__.cpython-36.pyc
+©¶  ©¶  ©¶  ©¶  ©¶          __init__.cpython-37.pyc
+©¶  ©¶  ©¶  ©¶  ©¶          __init__.cpython-38.pyc
+©¶  ©¶  ©¶  ©¶  ©¶          
+©¶  ©¶  ©¶  ©¶  ©¿©§nets
+©¶  ©¶  ©¶  ©¶  ©¶  ©¶  net.py
+©¶  ©¶  ©¶  ©¶  ©¶  ©¶  net_rbf.py
+©¶  ©¶  ©¶  ©¶  ©¶  ©¶  net_slim.py
+©¶  ©¶  ©¶  ©¶  ©¶  ©¶  retinaface.py
+©¶  ©¶  ©¶  ©¶  ©¶  ©¶  __init__.py
+©¶  ©¶  ©¶  ©¶  ©¶  ©¶  
+©¶  ©¶  ©¶  ©¶  ©¶  ©∏©§__pycache__
+©¶  ©¶  ©¶  ©¶  ©¶          net.cpython-36.pyc
+©¶  ©¶  ©¶  ©¶  ©¶          net.cpython-37.pyc
+©¶  ©¶  ©¶  ©¶  ©¶          net.cpython-38.pyc
+©¶  ©¶  ©¶  ©¶  ©¶          net_rbf.cpython-37.pyc
+©¶  ©¶  ©¶  ©¶  ©¶          net_rfb.cpython-36.pyc
+©¶  ©¶  ©¶  ©¶  ©¶          net_rfb.cpython-37.pyc
+©¶  ©¶  ©¶  ©¶  ©¶          net_rfb.cpython-38.pyc
+©¶  ©¶  ©¶  ©¶  ©¶          net_slim.cpython-36.pyc
+©¶  ©¶  ©¶  ©¶  ©¶          net_slim.cpython-37.pyc
+©¶  ©¶  ©¶  ©¶  ©¶          net_slim.cpython-38.pyc
+©¶  ©¶  ©¶  ©¶  ©¶          retinaface.cpython-36.pyc
+©¶  ©¶  ©¶  ©¶  ©¶          retinaface.cpython-37.pyc
+©¶  ©¶  ©¶  ©¶  ©¶          retinaface.cpython-38.pyc
+©¶  ©¶  ©¶  ©¶  ©¶          __init__.cpython-36.pyc
+©¶  ©¶  ©¶  ©¶  ©¶          __init__.cpython-37.pyc
+©¶  ©¶  ©¶  ©¶  ©¶          __init__.cpython-38.pyc
+©¶  ©¶  ©¶  ©¶  ©¶          
+©¶  ©¶  ©¶  ©¶  ©¿©§nms
+©¶  ©¶  ©¶  ©¶  ©¶  ©¶  py_cpu_nms.py
+©¶  ©¶  ©¶  ©¶  ©¶  ©¶  __init__.py
+©¶  ©¶  ©¶  ©¶  ©¶  ©¶  
+©¶  ©¶  ©¶  ©¶  ©¶  ©∏©§__pycache__
+©¶  ©¶  ©¶  ©¶  ©¶          py_cpu_nms.cpython-36.pyc
+©¶  ©¶  ©¶  ©¶  ©¶          py_cpu_nms.cpython-37.pyc
+©¶  ©¶  ©¶  ©¶  ©¶          py_cpu_nms.cpython-38.pyc
+©¶  ©¶  ©¶  ©¶  ©¶          __init__.cpython-36.pyc
+©¶  ©¶  ©¶  ©¶  ©¶          __init__.cpython-37.pyc
+©¶  ©¶  ©¶  ©¶  ©¶          __init__.cpython-38.pyc
+©¶  ©¶  ©¶  ©¶  ©¶          
+©¶  ©¶  ©¶  ©¶  ©∏©§__pycache__
+©¶  ©¶  ©¶  ©¶          __init__.cpython-36.pyc
+©¶  ©¶  ©¶  ©¶          __init__.cpython-37.pyc
+©¶  ©¶  ©¶  ©¶          __init__.cpython-38.pyc
+©¶  ©¶  ©¶  ©¶          
+©¶  ©¶  ©¶  ©¿©§pretrained
+©¶  ©¶  ©¶  ©¶  ©¿©§mnn
+©¶  ©¶  ©¶  ©¶  ©¶      rbf_1000_1000.mnn
+©¶  ©¶  ©¶  ©¶  ©¶      rbf_1000_1000_sim.mnn
+©¶  ©¶  ©¶  ©¶  ©¶      rbf_300_300.mnn
+©¶  ©¶  ©¶  ©¶  ©¶      rbf_300_300_sim.mnn
+©¶  ©¶  ©¶  ©¶  ©¶      rbf_400_400.mnn
+©¶  ©¶  ©¶  ©¶  ©¶      rbf_400_400_sim.mnn
+©¶  ©¶  ©¶  ©¶  ©¶      rbf_500_500.mnn
+©¶  ©¶  ©¶  ©¶  ©¶      rbf_500_500_sim.mnn
+©¶  ©¶  ©¶  ©¶  ©¶      rbf_600_600.mnn
+©¶  ©¶  ©¶  ©¶  ©¶      rbf_600_600_sim.mnn
+©¶  ©¶  ©¶  ©¶  ©¶      rbf_800_800.mnn
+©¶  ©¶  ©¶  ©¶  ©¶      rbf_800_800_sim.mnn
+©¶  ©¶  ©¶  ©¶  ©¶      
+©¶  ©¶  ©¶  ©¶  ©¿©§ncnn
+©¶  ©¶  ©¶  ©¶  ©¶      RBF_Final_256_256_sim.bin
+©¶  ©¶  ©¶  ©¶  ©¶      RBF_Final_256_256_sim.param
+©¶  ©¶  ©¶  ©¶  ©¶      RBF_Final_300_300_sim.bin
+©¶  ©¶  ©¶  ©¶  ©¶      RBF_Final_300_300_sim.param
+©¶  ©¶  ©¶  ©¶  ©¶      
+©¶  ©¶  ©¶  ©¶  ©¿©§onnx
+©¶  ©¶  ©¶  ©¶  ©¶      rbf_1000_1000.onnx
+©¶  ©¶  ©¶  ©¶  ©¶      rbf_1000_1000_sim.onnx
+©¶  ©¶  ©¶  ©¶  ©¶      rbf_300_300.onnx
+©¶  ©¶  ©¶  ©¶  ©¶      rbf_300_300_sim.onnx
+©¶  ©¶  ©¶  ©¶  ©¶      rbf_400_400.onnx
+©¶  ©¶  ©¶  ©¶  ©¶      rbf_400_400_sim.onnx
+©¶  ©¶  ©¶  ©¶  ©¶      rbf_500_500.onnx
+©¶  ©¶  ©¶  ©¶  ©¶      rbf_500_500_sim.onnx
+©¶  ©¶  ©¶  ©¶  ©¶      rbf_600_600.onnx
+©¶  ©¶  ©¶  ©¶  ©¶      rbf_600_600_sim.onnx
+©¶  ©¶  ©¶  ©¶  ©¶      rbf_800_800.onnx
+©¶  ©¶  ©¶  ©¶  ©¶      rbf_800_800_sim.onnx
+©¶  ©¶  ©¶  ©¶  ©¶      RBF_Final_256_256.onnx
+©¶  ©¶  ©¶  ©¶  ©¶      RBF_Final_256_256_sim.onnx
+©¶  ©¶  ©¶  ©¶  ©¶      RBF_Final_300_300.onnx
+©¶  ©¶  ©¶  ©¶  ©¶      RBF_Final_300_300_sim.onnx
+©¶  ©¶  ©¶  ©¶  ©¶      
+©¶  ©¶  ©¶  ©¶  ©∏©§pth
+©¶  ©¶  ©¶  ©¶          face_detection_rbf.pth
+©¶  ©¶  ©¶  ©¶          mobilenet0.25_Final.pth
+©¶  ©¶  ©¶  ©¶          RBF_Final.pth
+©¶  ©¶  ©¶  ©¶          slim_Final.pth
+©¶  ©¶  ©¶  ©¶          
+©¶  ©¶  ©¶  ©¿©§test_image
+©¶  ©¶  ©¶  ©¶      test0001.jpg
+©¶  ©¶  ©¶  ©¶      zbug.jpg
+©¶  ©¶  ©¶  ©¶      
+©¶  ©¶  ©¶  ©∏©§__pycache__
+©¶  ©¶  ©¶          light_detector.cpython-36.pyc
+©¶  ©¶  ©¶          light_detector.cpython-37.pyc
+©¶  ©¶  ©¶          __init__.cpython-36.pyc
+©¶  ©¶  ©¶          __init__.cpython-37.pyc
+©¶  ©¶  ©¶          
+©¶  ©¶  ©¿©§mtcnn
+©¶  ©¶  ©¶  ©¶  mtcnn_detector.py
+©¶  ©¶  ©¶  ©¶  onet_demo.py
+©¶  ©¶  ©¶  ©¶  onet_landmark_alignment.py
+©¶  ©¶  ©¶  ©¶  requirements.txt
+©¶  ©¶  ©¶  ©¶  __init__.py
+©¶  ©¶  ©¶  ©¶  
+©¶  ©¶  ©¶  ©¿©§models
+©¶  ©¶  ©¶  ©¶  ©¶  box_utils.py
+©¶  ©¶  ©¶  ©¶  ©¶  face_resize.py
+©¶  ©¶  ©¶  ©¶  ©¶  first_stage.py
+©¶  ©¶  ©¶  ©¶  ©¶  get_nets.py
+©¶  ©¶  ©¶  ©¶  ©¶  mtcnn_model.py
+©¶  ©¶  ©¶  ©¶  ©¶  onet.npy
+©¶  ©¶  ©¶  ©¶  ©¶  onet_landmark.py
+©¶  ©¶  ©¶  ©¶  ©¶  pnet.npy
+©¶  ©¶  ©¶  ©¶  ©¶  rnet.npy
+©¶  ©¶  ©¶  ©¶  ©¶  __init__.py
+©¶  ©¶  ©¶  ©¶  ©¶  
+©¶  ©¶  ©¶  ©¶  ©∏©§__pycache__
+©¶  ©¶  ©¶  ©¶          box_utils.cpython-36.pyc
+©¶  ©¶  ©¶  ©¶          box_utils.cpython-37.pyc
+©¶  ©¶  ©¶  ©¶          box_utils.cpython-38.pyc
+©¶  ©¶  ©¶  ©¶          first_stage.cpython-36.pyc
+©¶  ©¶  ©¶  ©¶          first_stage.cpython-37.pyc
+©¶  ©¶  ©¶  ©¶          first_stage.cpython-38.pyc
+©¶  ©¶  ©¶  ©¶          get_nets.cpython-36.pyc
+©¶  ©¶  ©¶  ©¶          get_nets.cpython-37.pyc
+©¶  ©¶  ©¶  ©¶          get_nets.cpython-38.pyc
+©¶  ©¶  ©¶  ©¶          mtcnn_model.cpython-36.pyc
+©¶  ©¶  ©¶  ©¶          mtcnn_model.cpython-37.pyc
+©¶  ©¶  ©¶  ©¶          mtcnn_model.cpython-38.pyc
+©¶  ©¶  ©¶  ©¶          __init__.cpython-36.pyc
+©¶  ©¶  ©¶  ©¶          __init__.cpython-37.pyc
+©¶  ©¶  ©¶  ©¶          __init__.cpython-38.pyc
+©¶  ©¶  ©¶  ©¶          
+©¶  ©¶  ©¶  ©¿©§test_image
+©¶  ©¶  ©¶  ©¶      test0001.jpg
+©¶  ©¶  ©¶  ©¶      zbug.jpg
+©¶  ©¶  ©¶  ©¶      
+©¶  ©¶  ©¶  ©∏©§__pycache__
+©¶  ©¶  ©¶          mtcnn_detector.cpython-36.pyc
+©¶  ©¶  ©¶          mtcnn_detector.cpython-37.pyc
+©¶  ©¶  ©¶          mtcnn_detector.cpython-38.pyc
+©¶  ©¶  ©¶          __init__.cpython-36.pyc
+©¶  ©¶  ©¶          __init__.cpython-37.pyc
+©¶  ©¶  ©¶          __init__.cpython-38.pyc
+©¶  ©¶  ©¶          
+©¶  ©¶  ©∏©§__pycache__
+©¶  ©¶          detector.cpython-36.pyc
+©¶  ©¶          detector.cpython-37.pyc
+©¶  ©¶          detector.cpython-38.pyc
+©¶  ©¶          __init__.cpython-36.pyc
+©¶  ©¶          __init__.cpython-37.pyc
+©¶  ©¶          __init__.cpython-38.pyc
+©¶  ©¶          
+©¶  ©¿©§feature
+©¶  ©¶  ©¶  demo.py
+©¶  ©¶  ©¶  face1.jpg
+©¶  ©¶  ©¶  face2.jpg
+©¶  ©¶  ©¶  face3.jpg
+©¶  ©¶  ©¶  __init__.py
+©¶  ©¶  ©¶  
+©¶  ©¶  ©¿©§net
+©¶  ©¶  ©¶  ©¶  mobilenet_v2.py
+©¶  ©¶  ©¶  ©¶  model_resnet.py
+©¶  ©¶  ©¶  ©¶  __init__.py
+©¶  ©¶  ©¶  ©¶  
+©¶  ©¶  ©¶  ©∏©§__pycache__
+©¶  ©¶  ©¶          mobilenet_v2.cpython-36.pyc
+©¶  ©¶  ©¶          mobilenet_v2.cpython-37.pyc
+©¶  ©¶  ©¶          mobilenet_v2.cpython-38.pyc
+©¶  ©¶  ©¶          model_resnet.cpython-36.pyc
+©¶  ©¶  ©¶          model_resnet.cpython-37.pyc
+©¶  ©¶  ©¶          model_resnet.cpython-38.pyc
+©¶  ©¶  ©¶          __init__.cpython-36.pyc
+©¶  ©¶  ©¶          __init__.cpython-37.pyc
+©¶  ©¶  ©¶          __init__.cpython-38.pyc
+©¶  ©¶  ©¶          
+©¶  ©¶  ©¿©§weight
+©¶  ©¶  ©¶  ©¿©§onnx
+©¶  ©¶  ©¶  ©¶      mobilenet_v2.onnx
+©¶  ©¶  ©¶  ©¶      resnet18.pth
+©¶  ©¶  ©¶  ©¶      resnet50.onnx
+©¶  ©¶  ©¶  ©¶      
+©¶  ©¶  ©¶  ©¿©§pth
+©¶  ©¶  ©¶  ©¶      mobilenet_v2.pth
+©¶  ©¶  ©¶  ©¶      resnet18.pth
+©¶  ©¶  ©¶  ©¶      resnet50.pth
+©¶  ©¶  ©¶  ©¶      
+©¶  ©¶  ©¶  ©∏©§tnn
+©¶  ©¶  ©¶          mobilenet_v2.sim.tnnmodel
+©¶  ©¶  ©¶          mobilenet_v2.sim.tnnproto
+©¶  ©¶  ©¶          resnet18.sim.tnnmodel
+©¶  ©¶  ©¶          resnet18.sim.tnnproto
+©¶  ©¶  ©¶          resnet50.sim.tnnmodel
+©¶  ©¶  ©¶          resnet50.sim.tnnproto
+©¶  ©¶  ©¶          
+©¶  ©¶  ©∏©§__pycache__
+©¶  ©¶          demo.cpython-36.pyc
+©¶  ©¶          demo.cpython-37.pyc
+©¶  ©¶          demo.cpython-38.pyc
+©¶  ©¶          __init__.cpython-36.pyc
+©¶  ©¶          __init__.cpython-37.pyc
+©¶  ©¶          __init__.cpython-38.pyc
+©¶  ©¶          
+©¶  ©¿©§output
+©¶  ©¶      model.onnx
+©¶  ©¶      
+©¶  ©∏©§__pycache__
+©¶          face_detector.cpython-36.pyc
+©¶          face_detector.cpython-37.pyc
+©¶          face_detector.cpython-38.pyc
+©¶          face_feature.cpython-36.pyc
+©¶          face_feature.cpython-37.pyc
+©¶          face_feature.cpython-38.pyc
+©¶          face_matcher.cpython-36.pyc
+©¶          face_matcher.cpython-37.pyc
+©¶          face_matcher.cpython-38.pyc
+©¶          face_recognizer.cpython-36.pyc
+©¶          face_recognizer.cpython-38.pyc
+©¶          face_register.cpython-36.pyc
+©¶          face_register.cpython-38.pyc
+©¶          __init__.cpython-36.pyc
+©¶          __init__.cpython-37.pyc
+©¶          __init__.cpython-38.pyc
+©¶          
+©¿©§data
+©¶  ©¶  test-video.mp4
+©¶  ©¶  test-video1.mp4
+©¶  ©¶  test-video2.mp4
+©¶  ©¶  
+©¶  ©¿©§database
+©¶  ©¶  ©¶  database-resnet50.json
+©¶  ©¶  ©¶  database.json
+©¶  ©¶  ©¶  
+©¶  ©¶  ©∏©§portrait
+©¶  ©¶          ¡ı“‡∑«-0001.jpg
+©¶  ©¶          ¡ı ´ ´-0001.png
+©¶  ©¶          Œ‚æ©-0001.jpg
+©¶  ©¶          ÷‹Ω‹¬◊-0001.jpg
+©¶  ©¶          “Ï≥£-≤‚ ‘.jpg
+©¶  ©¶          ’≈“Î-0001.jpg
+©¶  ©¶          ≥…¡˙-0001.jpg
+©¶  ©¶          Œﬁ–ß.jpg
+©¶  ©¶          —Ó√›-0001.jpg
+©¶  ©¶          ∫˙∏Ë-0001.jpg
+©¶  ©¶          ‘¨∫Î-0001.jpg
+©¶  ©¶          ∏ﬂ‘≤‘≤-0001.jpg
+©¶  ©¶          
+©¶  ©¿©§database-test
+©¶  ©¶  ©¶  test0001.jpg
+©¶  ©¶  ©¶  test0002.jpg
+©¶  ©¶  ©¶  
+©¶  ©¶  ©¿©§¡ı“‡∑«
+©¶  ©¶  ©¶      0001.jpg
+©¶  ©¶  ©¶      0002.jpg
+©¶  ©¶  ©¶      0003.jpg
+©¶  ©¶  ©¶      
+©¶  ©¶  ©¿©§¡ı ´ ´
+©¶  ©¶  ©¶      45daaca084799902eefb56f6dabd11e1.jpeg
+©¶  ©¶  ©¶      7236390bee9ba315f365ddd2f88aeabf.jpg
+©¶  ©¶  ©¶      8d53e9bab3e2acbaa4bef4a7ae0da476.jpeg
+©¶  ©¶  ©¶      f3923e51d300d856c08fbbb49c2cddc2.jpeg
+©¶  ©¶  ©¶      fd5b9cf711753c8b8fd223d43e19aafb.jpg
+©¶  ©¶  ©¶      
+©¶  ©¶  ©¿©§Œ‚æ©
+©¶  ©¶  ©¶      46529b317bda1f0c5259e400976d81b5.jpg
+©¶  ©¶  ©¶      562d3a19e7e653a645f5ef4b0c56f0f7.jpeg
+©¶  ©¶  ©¶      d919164fa211b985c11b30227e8ee2ba.jpg
+©¶  ©¶  ©¶      
+©¶  ©¶  ©¿©§÷‹Ω‹¬◊
+©¶  ©¶  ©¶      4d14a97eb642affaccf45bf134a11437.jpg
+©¶  ©¶  ©¶      4d44da012a8bbbe285deb1a97ef14494.jpg
+©¶  ©¶  ©¶      bf466c4348751926b5d37fc7f6ba7c2a.jpg
+©¶  ©¶  ©¶      
+©¶  ©¶  ©¿©§’≈“Î
+©¶  ©¶  ©¶      6d857293c171e8bc1ccef667dad3f651.jpg
+©¶  ©¶  ©¶      7f191b0c36458f7f511d431956441e51.jpg
+©¶  ©¶  ©¶      f12449aacb58bb19a992fdb6e3ed6396.jpeg
+©¶  ©¶  ©¶      
+©¶  ©¶  ©¿©§≥…¡˙
+©¶  ©¶  ©¶      41c7b3702210a6f7c2ab4a6c200aafc4.jpg
+©¶  ©¶  ©¶      d9ada5e12bc9cfd82f85278fe05363e0.jpg
+©¶  ©¶  ©¶      
+©¶  ©¶  ©¿©§—Ó√›
+©¶  ©¶  ©¶      1e3611bb88bf950f04e997a90f34899a.jpg
+©¶  ©¶  ©¶      25c69ffcb819abd562f3da32ebd8c3c0.jpg
+©¶  ©¶  ©¶      afef07e4e4c4df6ec49ac4cc0c836e4d.jpg
+©¶  ©¶  ©¶      e794f0d7da5b5b1641696ee623999b34.jpg
+©¶  ©¶  ©¶      
+©¶  ©¶  ©¿©§∫˙∏Ë
+©¶  ©¶  ©¶      0001.jpg
+©¶  ©¶  ©¶      0002.jpg
+©¶  ©¶  ©¶      0003.jpg
+©¶  ©¶  ©¶      0004.jpg
+©¶  ©¶  ©¶      
+©¶  ©¶  ©¿©§‘¨∫Î
+©¶  ©¶  ©¶      14d3101566623d6b2f8de2f4d273d975.jpg
+©¶  ©¶  ©¶      b7bd1992a0d95555872300d02c8d1d12.jpg
+©¶  ©¶  ©¶      e5f28bb0d8a552973d25d1cc998fbd5c.jpeg
+©¶  ©¶  ©¶      
+©¶  ©¶  ©∏©§∏ﬂ‘≤‘≤
+©¶  ©¶          2da657d32aee58f5b8dd2641bd2b4b93.jpg
+©¶  ©¶          aeecfb27dd9270bce695f99b5edc86e5.jpg
+©¶  ©¶          e1e437a40768e57d9e1d37ea17341d32.jpg
+©¶  ©¶          
+©¶  ©∏©§test_image
+©¶          test1.jpg
+©¶          test10.jpg
+©¶          test2.jpg
+©¶          test3.jpg
+©¶          test4.jpg
+©¶          test5.jpg
+©¶          test6.jpg
+©¶          test7.jpg
+©¶          test8.jpg
+©¶          test9.jpg
+©¶          
+©¿©§docs
+©¶  ©¶  framework.png
+©¶  ©¶  
+©¶  ©∏©§assets
+©¶          alignment.png
+©¶          face_align1.png
+©¶          face_align2.png
+©¶          face_align3.png
+©¶          result1.avi
+©¶          result1.gif
+©¶          result2.avi
+©¶          result2.gif
+©¶          test1.jpg
+©¶          test2.jpg
+©¶          test3.jpg
+©¶          test4.jpg
+©¶          test5.jpg
+©¶          test6.jpg
+©¶          test7.jpg
+©¶          test8.jpg
+©¶          test9.jpg
+©¿©§frontend
+©¶  ©¶  package-lock.json
+©¶  ©¶  package.json
+©¶  ©¶  vite.config.js
+©¶  ©¶  
+©¶  ©∏©§src
+©¶      ©¶  App.vue
+©¶      ©¶  main.js
+©¶      ©¶  style.css
+©¶      ©¶  
+©¶      ©¿©§components
+©¶      ©¶      FaceAlignment.vue
+©¶      ©¶      FaceComparison.vue
+©¶      ©¶      FaceDetection.vue
+©¶      ©¶      FaceRegistration.vue
+©¶      ©¶      FaceSearch.vue
+©¶      ©¶      
+©¶      ©∏©§router
+©¶              index.js
+©¿©§output
+©¿©§static
+©¶  ©¿©§css
+©¶  ©¶      style.css
+©¶  ©¶      
+©¶  ©∏©§uploads
+©¶          aligned_0_test1.jpg
+©¶          aligned_0_test3.jpg
+©¶          
+©∏©§templates
+        index.html
+        

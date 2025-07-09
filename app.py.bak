@@ -1,0 +1,299 @@
+import os
+import cv2
+import numpy as np
+import traceback
+from flask import Flask, request, jsonify, render_template, url_for
+from werkzeug.utils import secure_filename
+import uuid
+from flask_cors import CORS # 导入CORS
+
+# --------------------------------------------------------------------------------
+# 请确保您的项目结构与此处的导入路径一致
+# --------------------------------------------------------------------------------
+from core.face_recognizer import FaceRecognizer
+from core.face_detector import FaceDetector
+from core.alignment.face_alignment import face_alignment
+from configs import configs as cfg
+
+# --- 应用初始化 ---
+app = Flask(__name__)
+CORS(app, resources={r"/api/*": {"origins": "*"}}) # 为所有/api/开头的路由启用CORS
+
+# --- 配置 ---
+UPLOAD_FOLDER = 'static/uploads'
+ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # 16MB
+
+# --- 全局变量和模型初始化 ---
+os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
+
+try:
+    DATABASE_FILE = "data/database/database.json"
+    # **注意**: 初始化检测器时使用一个较低的固定阈值，以便后续可以灵活过滤
+    recognizer = FaceRecognizer(database=DATABASE_FILE, det_thresh=0.6)
+    detector = FaceDetector(net_name='RBF', input_size=[640, 640], conf_thresh=0.6)
+    print("模型加载成功。")
+except Exception as e:
+    print(f"初始化模型时出错: {e}")
+    recognizer = None
+    detector = None
+
+def allowed_file(filename):
+    """检查文件扩展名是否被允许"""
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+def save_and_process_image(file_storage):
+    """保存上传的图片并读取为OpenCV格式"""
+    if not file_storage or file_storage.filename == '':
+        return None, None, "No file selected"
+
+    if allowed_file(file_storage.filename):
+        filename = secure_filename(file_storage.filename)
+        unique_filename = f"{uuid.uuid4().hex}_{filename}"
+        filepath = os.path.join(app.config['UPLOAD_FOLDER'], unique_filename)
+        
+        file_storage.save(filepath)
+
+        image = cv2.imdecode(np.fromfile(filepath, dtype=np.uint8), cv2.IMREAD_COLOR)
+        
+        if image is None:
+            return None, None, "Failed to decode image file. It might be corrupted or in an unsupported format."
+
+        return image, filepath, None
+    else:
+        return None, None, "File type not allowed"
+
+def draw_detections(image, boxes, scores, landms):
+    """在图像上绘制检测框和关键点 (服务器安全)"""
+    if boxes is None:
+        return image
+    vis_image = image.copy()
+    # 绘制人脸框和分数
+    for i, box in enumerate(boxes):
+        x1, y1, x2, y2 = map(int, box)
+        cv2.rectangle(vis_image, (x1, y1), (x2, y2), (0, 255, 0), 2)
+        if scores is not None:
+            # **修正**: 从 scores[i] 数组中提取浮点数进行格式化
+            score_val = scores[i]
+            if isinstance(score_val, np.ndarray):
+                score_val = score_val[0]
+            score_text = f"{score_val:.2f}"
+            cv2.putText(vis_image, score_text, (x1, y1 - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 255, 0), 2)
+    # 绘制关键点
+    if landms is not None:
+        for landmark in landms:
+            for point in landmark:
+                x, y = int(point[0]), int(point[1])
+                cv2.circle(vis_image, (x, y), 2, (0, 0, 255), -1)
+    return vis_image
+
+def filter_results_by_threshold(boxes, scores, landms, threshold):
+    """根据置信度阈值过滤检测结果"""
+    if scores is None:
+        return None, None, None
+    
+    indices = np.where(scores.flatten() >= threshold)[0]
+    
+    if len(indices) == 0:
+        return None, None, None
+        
+    return boxes[indices], scores[indices], landms[indices]
+
+# --- 路由和API端点 ---
+
+@app.route('/')
+def index():
+    """渲染主页"""
+    return render_template('index.html')
+
+@app.route('/api/detect', methods=['POST'])
+def api_detect_face():
+    """人脸检测API"""
+    if 'file' not in request.files:
+        return jsonify({'error': 'No file part'}), 400
+    file = request.files['file']
+    # **新增**: 从表单获取阈值，如果未提供则使用默认值
+    det_thresh = request.form.get('det_thresh', default=0.6, type=float)
+
+    image, original_path, error = save_and_process_image(file)
+    if error:
+        return jsonify({'error': error}), 400
+
+    try:
+        # 先获取所有可能的检测结果
+        all_boxes, all_scores, all_landms = detector.detect_face_landmarks(image)
+        # **新增**: 根据传入的阈值进行过滤
+        boxes, scores, landms = filter_results_by_threshold(all_boxes, all_scores, all_landms, det_thresh)
+        
+        result_image = draw_detections(image, boxes, scores, landms)
+
+        result_filename = f"detected_{os.path.basename(original_path)}"
+        result_filepath = os.path.join(app.config['UPLOAD_FOLDER'], result_filename)
+        cv2.imwrite(result_filepath, result_image)
+        processed_url = url_for('static', filename=f'uploads/{result_filename}', _external=True)
+
+        return jsonify({
+            'original_image': url_for('static', filename=f'uploads/{os.path.basename(original_path)}'),
+            'processed_image': url_for('static', filename=f'uploads/{result_filename}'),
+            'detections': len(boxes) if boxes is not None else 0
+        })
+    except Exception as e:
+        traceback.print_exc()
+        return jsonify({'error': f'An error occurred during detection: {str(e)}'}), 500
+
+@app.route('/api/align', methods=['POST'])
+def api_align_face():
+    """人脸对齐API"""
+    if 'file' not in request.files:
+        return jsonify({'error': 'No file part'}), 400
+    file = request.files['file']
+    # **新增**: 从表单获取阈值
+    det_thresh = request.form.get('det_thresh', default=0.5, type=float)
+
+    image, original_url, error = save_and_process_image(file)
+    if error:
+        return jsonify({'error': error}), 400
+
+    '''
+    try:
+        boxes, _, landms = detector.detect_face_landmarks(image)
+        if landms is None or len(landms) == 0:
+            return jsonify({'error': 'No face detected for alignment.'}), 400
+
+        aligned_face = face_alignment(image, landms[0], boxes[0])
+
+        result_filename = f"aligned_{os.path.basename(original_path)}"
+        result_filepath = os.path.join(app.config['UPLOAD_FOLDER'], result_filename)
+        cv2.imwrite(result_filepath, aligned_face)
+
+        return jsonify({
+            'original_image': url_for('static', filename=f'uploads/{os.path.basename(original_path)}'),
+            'processed_image': url_for('static', filename=f'uploads/{result_filename}')
+        })
+    '''
+    try:
+        all_boxes, all_scores, all_landms = detector.detect_face_landmarks(image)
+        # **新增**: 根据传入的阈值进行过滤
+        boxes, _, landms = filter_results_by_threshold(all_boxes, all_scores, all_landms, det_thresh)
+        if landms is None or len(landms) == 0:
+            return jsonify({'error': 'No face detected for alignment.'}), 400
+
+        # **修正**: 循环处理所有检测到的人脸
+        processed_urls = []
+        original_basename = os.path.basename(original_url)
+
+        for i, (box, landmark) in enumerate(zip(boxes, landms)):
+            aligned_face = face_alignment(image, landmark, box)
+            
+            # 为每张对齐的人脸创建唯一的文件名
+            result_filename = f"aligned_{i}_{original_basename}"
+            result_filepath = os.path.join(app.config['UPLOAD_FOLDER'], result_filename)
+            cv2.imwrite(result_filepath, aligned_face)
+            
+            # 获取该文件的URL并添加到列表中
+            processed_url = url_for('static', filename=f'uploads/{result_filename}', _external=True)
+            processed_urls.append(processed_url)
+
+        # **修正**: 返回包含所有对齐人脸URL的列表
+        return jsonify({
+            'original_image': original_url,
+            'processed_images': processed_urls, # 注意：键名从 processed_image 变为 processed_images
+        })
+    
+    except Exception as e:
+        traceback.print_exc()
+        return jsonify({'error': f'An error occurred during alignment: {str(e)}'}), 500
+
+@app.route('/api/register', methods=['POST'])
+def api_register_face():
+    """人脸注册API"""
+    if 'file' not in request.files or 'person_name' not in request.form:
+        return jsonify({'error': 'Missing file or person name'}), 400
+
+    file = request.files['file']
+    person_name = request.form['person_name']
+    if not person_name:
+        return jsonify({'error': 'Person name cannot be empty'}), 400
+
+    image, _, error = save_and_process_image(file)
+    if error:
+        return jsonify({'error': error}), 400
+
+    try:
+        recognizer.add_face(face_id=person_name, bgr=image)
+        return jsonify({'message': f'Successfully registered face for {person_name}.'})
+    except Exception as e:
+        traceback.print_exc()
+        return jsonify({'error': f'Failed to register face: {str(e)}'}), 500
+
+@app.route('/api/compare', methods=['POST'])
+def api_compare_faces():
+    """1:1 人脸比对API"""
+    if 'file1' not in request.files or 'file2' not in request.files:
+        return jsonify({'error': 'Two files are required for comparison'}), 400
+
+    file1 = request.files['file1']
+    file2 = request.files['file2']
+
+    image1, path1, error1 = save_and_process_image(file1)
+    image2, path2, error2 = save_and_process_image(file2)
+
+    if error1 or error2:
+        return jsonify({'error': error1 or error2}), 400
+
+    try:
+        score, _, _ = recognizer.compare_face(image1, image2)
+        # **修正**: 将 numpy.bool_ 显式转换为 python bool
+        is_same = bool(score >= cfg.rec_thresh)
+
+        return jsonify({
+            'image1': url_for('static', filename=f'uploads/{os.path.basename(path1)}'),
+            'image2': url_for('static', filename=f'uploads/{os.path.basename(path2)}'),
+            'similarity': f"{score:.4f}",
+            'is_same': is_same,
+            'result_text': "同一人" if is_same else "不同人"
+        })
+    except Exception as e:
+        traceback.print_exc()
+        return jsonify({'error': f'An error occurred during comparison: {str(e)}'}), 500
+
+@app.route('/api/search', methods=['POST'])
+def api_search_face():
+    """1:N 人脸搜索API"""
+    if 'file' not in request.files:
+        return jsonify({'error': 'No file part'}), 400
+    file = request.files['file']
+
+    image, original_path, error = save_and_process_image(file)
+    if error:
+        return jsonify({'error': error}), 400
+
+    try:
+        face_info, result_image = recognizer.detect_search(image, vis=False)
+
+        result_filename = f"searched_{os.path.basename(original_path)}"
+        result_filepath = os.path.join(app.config['UPLOAD_FOLDER'], result_filename)
+        cv2.imwrite(result_filepath, result_image)
+
+        results = []
+        if face_info.get('pred_id'):
+            for i, box in enumerate(face_info['boxes']):
+                results.append({
+                    'box': [int(b) for b in box],
+                    'id': face_info['pred_id'][i],
+                    'score': f"{face_info['pred_score'][i]:.4f}"
+                })
+
+        return jsonify({
+            'original_image': url_for('static', filename=f'uploads/{os.path.basename(original_path)}'),
+            'processed_image': url_for('static', filename=f'uploads/{result_filename}'),
+            'results': results
+        })
+    except Exception as e:
+        traceback.print_exc()
+        return jsonify({'error': f'An error occurred during search: {str(e)}'}), 500
+
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=5000, debug=True)
